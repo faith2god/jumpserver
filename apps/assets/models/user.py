@@ -72,6 +72,9 @@ class SystemUser(BaseUser):
     PROTOCOL_TELNET = 'telnet'
     PROTOCOL_VNC = 'vnc'
     PROTOCOL_MYSQL = 'mysql'
+    PROTOCOL_ORACLE = 'oracle'
+    PROTOCOL_MARIADB = 'mariadb'
+    PROTOCOL_POSTGRESQL = 'postgresql'
     PROTOCOL_K8S = 'k8s'
     PROTOCOL_CHOICES = (
         (PROTOCOL_SSH, 'ssh'),
@@ -79,6 +82,9 @@ class SystemUser(BaseUser):
         (PROTOCOL_TELNET, 'telnet'),
         (PROTOCOL_VNC, 'vnc'),
         (PROTOCOL_MYSQL, 'mysql'),
+        (PROTOCOL_ORACLE, 'oracle'),
+        (PROTOCOL_MARIADB, 'mariadb'),
+        (PROTOCOL_POSTGRESQL, 'PostgreSQL'),
         (PROTOCOL_K8S, 'k8s'),
     )
 
@@ -133,16 +139,23 @@ class SystemUser(BaseUser):
             return False
 
     @property
+    def db_category_protocols(self):
+        return [
+            self.PROTOCOL_MYSQL, self.PROTOCOL_ORACLE, self.PROTOCOL_MARIADB,
+            self.PROTOCOL_POSTGRESQL
+        ]
+
+    @property
     def is_need_cmd_filter(self):
         return self.protocol not in [self.PROTOCOL_RDP, self.PROTOCOL_VNC]
 
     @property
     def is_need_test_asset_connective(self):
-        return self.protocol not in [self.PROTOCOL_MYSQL]
+        return self.protocol not in self.db_category_protocols
 
     @property
     def can_perm_to_asset(self):
-        return self.protocol not in [self.PROTOCOL_MYSQL]
+        return self.protocol not in self.db_category_protocols
 
     def _merge_auth(self, other):
         super()._merge_auth(other)
