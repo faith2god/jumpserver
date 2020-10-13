@@ -180,6 +180,9 @@ class Session(OrgModelMixin):
         VNC = 'vnc', 'vnc'
         TELNET = 'telnet', 'telnet'
         MYSQL = 'mysql', 'mysql'
+        PROTOCOL_ORACLE = 'oracle', 'oracle'
+        PROTOCOL_MARIADB = 'mariadb', 'mariadb'
+        PROTOCOL_POSTGRESQL = 'postgresql', 'postgresql'
         K8S = 'k8s', 'kubernetes'
 
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
