@@ -14,7 +14,7 @@ __all__ = [
 
 class DatabaseAppViewSet(OrgBulkModelViewSet):
     model = models.DatabaseApp
-    filter_fields = ('name',)
+    filter_fields = ('name', 'type')
     search_fields = filter_fields
     permission_classes = (IsOrgAdminOrAppUser,)
     serializer_class = serializers.DatabaseAppSerializer
